@@ -1,7 +1,6 @@
-package dev.umc.smuing.communityReply;
+package dev.umc.smuing.communityComment;
 
 import dev.umc.smuing.community.Community;
-import dev.umc.smuing.communityReplyReply.CommunityReplyReply;
 import dev.umc.smuing.global.BaseEntity;
 import dev.umc.smuing.user.User;
 import jakarta.persistence.*;
@@ -12,14 +11,18 @@ import java.util.List;
 
 @Entity
 @Getter
-@Table(name = "community_reply")
-public class CommunityReply extends BaseEntity {
+@Table(name = "community_comment")
+public class CommunityComment extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "community_reply_id")
+    @Column(name = "community_comment_id")
     private Long id;
 
     private String content;
+
+    private Integer reports;
+
+    private Integer likes;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "community_id")
@@ -29,6 +32,10 @@ public class CommunityReply extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "communityReply")
-    private List<CommunityReplyReply> communityReplyReplies = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private CommunityComment parent;
+
+    @OneToMany(mappedBy = "parent", orphanRemoval = true)
+    private List<CommunityComment> children = new ArrayList<>();
 }
