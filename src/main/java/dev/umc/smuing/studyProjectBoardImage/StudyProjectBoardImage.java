@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Entity
 @Getter
-@Table(name = "study_project_board_Image")
+@Table(name = "study_project_board_image")
 public class StudyProjectBoardImage {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
