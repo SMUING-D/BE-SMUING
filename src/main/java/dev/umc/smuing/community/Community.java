@@ -1,7 +1,8 @@
 package dev.umc.smuing.community;
 
-import dev.umc.smuing.communityReply.CommunityReply;
-import dev.umc.smuing.communityReplyReply.CommunityReplyReply;
+import dev.umc.smuing.communityComment.CommunityComment;
+import dev.umc.smuing.communityImage.CommunityImage;
+import dev.umc.smuing.global.Enum.CompanyScale;
 import dev.umc.smuing.global.BaseEntity;
 import dev.umc.smuing.user.User;
 import jakarta.persistence.*;
@@ -23,17 +24,17 @@ public class Community extends BaseEntity {
     private String content;
 
     @Enumerated(EnumType.STRING)
-    private CompanyType companyType;
-
-    private String picture;
+    @Column(name = "company_scale")
+    private CompanyScale companyScale;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(mappedBy = "community")
-    private List<CommunityReply> communityReplies = new ArrayList<>();
+    private List<CommunityComment> communityComments = new ArrayList<>();
 
     @OneToMany(mappedBy = "community")
-    private List<CommunityReplyReply> communityReplyReplies = new ArrayList<>();
+    private List<CommunityImage> communityImages = new ArrayList<>();
+
 }
