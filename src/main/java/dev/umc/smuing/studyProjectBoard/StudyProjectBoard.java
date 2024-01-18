@@ -6,14 +6,17 @@ import dev.umc.smuing.studyProjectBoardImage.StudyProjectBoardImage;
 import dev.umc.smuing.studyProjectComment.StudyProjectComment;
 import dev.umc.smuing.mapping.UserStudyProject;
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Builder
 @Getter
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "study_project_board")
 public class StudyProjectBoard extends BaseEntity {
 

@@ -7,13 +7,16 @@ import dev.umc.smuing.global.Enum.UndergraduateGraduate;
 import dev.umc.smuing.studyProjectComment.StudyProjectComment;
 import dev.umc.smuing.mapping.UserStudyProject;
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Builder
 @Getter
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

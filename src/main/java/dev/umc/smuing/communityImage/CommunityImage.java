@@ -2,10 +2,14 @@ package dev.umc.smuing.communityImage;
 
 import dev.umc.smuing.community.Community;
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.*;
 
 @Entity
+@Builder
 @Getter
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "community_image")
 public class CommunityImage {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

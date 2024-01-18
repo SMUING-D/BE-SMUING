@@ -6,13 +6,16 @@ import dev.umc.smuing.global.Enum.CompanyScale;
 import dev.umc.smuing.global.BaseEntity;
 import dev.umc.smuing.user.User;
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Builder
 @Getter
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Community extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

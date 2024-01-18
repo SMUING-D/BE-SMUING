@@ -2,10 +2,13 @@ package dev.umc.smuing.studyProjectBoardImage;
 
 import dev.umc.smuing.studyProjectBoard.StudyProjectBoard;
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.*;
 
 @Entity
+@Builder
 @Getter
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "study_project_board_image")
 public class StudyProjectBoardImage {
 

@@ -4,13 +4,16 @@ import dev.umc.smuing.community.Community;
 import dev.umc.smuing.global.BaseEntity;
 import dev.umc.smuing.user.User;
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Builder
 @Getter
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "community_comment")
 public class CommunityComment extends BaseEntity {
 
