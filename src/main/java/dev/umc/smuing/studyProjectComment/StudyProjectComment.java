@@ -4,14 +4,17 @@ import dev.umc.smuing.global.BaseEntity;
 import dev.umc.smuing.studyProjectBoard.StudyProjectBoard;
 import dev.umc.smuing.user.User;
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "study_project_comment")
+@Builder
 @Getter
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "study_project_comment")
 public class StudyProjectComment extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

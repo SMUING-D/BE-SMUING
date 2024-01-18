@@ -4,10 +4,13 @@ import dev.umc.smuing.global.BaseEntity;
 import dev.umc.smuing.studyProjectBoard.StudyProjectBoard;
 import dev.umc.smuing.user.User;
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.*;
 
 @Entity
+@Builder
 @Getter
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "user_study_project")
 public class UserStudyProject extends BaseEntity {
 
