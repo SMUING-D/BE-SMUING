@@ -1,7 +1,7 @@
-package dev.umc.smuing.studyProjectComment;
+package dev.umc.smuing.postComment;
 
 import dev.umc.smuing.global.BaseEntity;
-import dev.umc.smuing.studyProjectBoard.StudyProjectBoard;
+import dev.umc.smuing.post.Post;
 import dev.umc.smuing.user.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -14,31 +14,32 @@ import java.util.List;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "study_project_comment")
-public class StudyProjectComment extends BaseEntity {
+@Table(name = "post_comment")
+public class PostComment extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "study_project_comment_id")
+    @Column(name = "post_comment_id")
     private Long id;
 
     private String content;
 
+    //보류
     private Integer likes;
-
+    //보류
     private Integer reports;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
-    private StudyProjectComment parent;
+    private PostComment parent;
 
     @OneToMany(mappedBy = "parent", orphanRemoval = true)
-    private List<StudyProjectComment> children = new ArrayList<>();
+    private List<PostComment> children = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "study_project_board_id")
-    private StudyProjectBoard studyProjectBoard;
+    @JoinColumn(name = "post_id")
+    private Post post;
 }

@@ -1,11 +1,11 @@
 package dev.umc.smuing.user;
 
-import dev.umc.smuing.community.Community;
-import dev.umc.smuing.communityComment.CommunityComment;
+import dev.umc.smuing.commentLike.CommentLike;
 import dev.umc.smuing.global.BaseEntity;
 import dev.umc.smuing.global.Enum.UndergraduateGraduate;
-import dev.umc.smuing.studyProjectComment.StudyProjectComment;
-import dev.umc.smuing.mapping.UserStudyProject;
+import dev.umc.smuing.post.Post;
+import dev.umc.smuing.postComment.PostComment;
+import dev.umc.smuing.postLike.PostLike;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -53,14 +53,16 @@ public class User extends BaseEntity {
     private String profile;
 
     @OneToMany(mappedBy = "user")
-    private List<Community> communities = new ArrayList<>();
+    private List<Post> post = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<CommunityComment> communityComments = new ArrayList<>();
+    private List<PostComment> postComments = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<UserStudyProject> userStudyProjects = new ArrayList<>();
+    private List<PostLike> postLikes = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<StudyProjectComment> studyProjectComments = new ArrayList<>();
+    private List<CommentLike> commentLikes = new ArrayList<>();
+
+
 }
