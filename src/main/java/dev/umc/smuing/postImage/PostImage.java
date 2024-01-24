@@ -22,6 +22,7 @@ public class PostImage {
 
     @Column(name = "origin_name")
     private String originName;
+
     @Column(name = "post_image_path")
     private String postImagePath;
 

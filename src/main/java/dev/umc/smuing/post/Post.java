@@ -63,9 +63,6 @@ public class Post extends BaseEntity {
     private List<PostImage> postImages = new ArrayList<>();
 
     @OneToMany(mappedBy = "post")
-    private List<CommentLike> commentLikes = new ArrayList<>();
-
-    @OneToMany(mappedBy = "post")
     private List<UserPost> userPosts = new ArrayList<>();
 
 }

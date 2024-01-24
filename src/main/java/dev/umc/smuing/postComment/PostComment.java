@@ -1,7 +1,9 @@
 package dev.umc.smuing.postComment;
 
+import dev.umc.smuing.commentLike.CommentLike;
 import dev.umc.smuing.global.BaseEntity;
 import dev.umc.smuing.post.Post;
+import dev.umc.smuing.postLike.PostLike;
 import dev.umc.smuing.user.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -42,4 +44,7 @@ public class PostComment extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
+
+    @OneToMany(mappedBy = "postComment")
+    private List<CommentLike> commentLikes = new ArrayList<>();
 }

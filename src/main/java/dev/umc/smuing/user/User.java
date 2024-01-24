@@ -3,6 +3,7 @@ package dev.umc.smuing.user;
 import dev.umc.smuing.commentLike.CommentLike;
 import dev.umc.smuing.global.BaseEntity;
 import dev.umc.smuing.global.Enum.UndergraduateGraduate;
+import dev.umc.smuing.mapping.UserPost;
 import dev.umc.smuing.post.Post;
 import dev.umc.smuing.postComment.PostComment;
 import dev.umc.smuing.postLike.PostLike;
@@ -53,7 +54,7 @@ public class User extends BaseEntity {
     private String profile;
 
     @OneToMany(mappedBy = "user")
-    private List<Post> post = new ArrayList<>();
+    private List<UserPost> userPosts = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<PostComment> postComments = new ArrayList<>();
