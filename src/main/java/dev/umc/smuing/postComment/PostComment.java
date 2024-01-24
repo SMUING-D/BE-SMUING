@@ -47,4 +47,12 @@ public class PostComment extends BaseEntity {
 
     @OneToMany(mappedBy = "postComment")
     private List<CommentLike> commentLikes = new ArrayList<>();
+
+    // 연관 관계 편의 메소드
+    public void setUser (User user) {
+        this.user = user;
+    }
+    public void setPost (Post post) {
+        this.post = post;
+    }
 }
