@@ -55,4 +55,10 @@ public class PostComment extends BaseEntity {
     public void setPost (Post post) {
         this.post = post;
     }
+    public void setComment(PostComment postComment) {
+        this.parent = postComment;
+    }
+    public void deleteComment() {
+        this.content = null;
+    }
 }
