@@ -1,5 +1,8 @@
 package dev.umc.smuing.postComment.service;
 
+import dev.umc.smuing.commentLike.CommentLike;
+import dev.umc.smuing.commentLike.converter.CommentLikeConverter;
+import dev.umc.smuing.commentLike.repository.CommentLikeRepository;
 import dev.umc.smuing.global.apiPayload.code.status.ErrorStatus;
 import dev.umc.smuing.global.apiPayload.exception.CommentException;
 import dev.umc.smuing.global.apiPayload.exception.UserException;
@@ -20,19 +23,17 @@ public class PostCommentCommentServiceImpl implements PostCommentCommentService 
 
     private final PostCommentRepository postCommentRepository;
     private final UserRepository userRepository;
+
     @Override
     public void postCommentComment(PostCommentRequestDto.CommentPostDto commentPostDto, Long userId, Long commentId) {
         User user = userRepository.findById(userId).orElseThrow(()-> new UserException(ErrorStatus.USER_NOT_FOUND));
         PostComment parentComment = postCommentRepository.findById(commentId).orElseThrow(()-> new CommentException(ErrorStatus.COMMENT_NOT_FOUND));
-        PostComment comment = PostCommentConverter.toPostComment(commentPostDto);
-        comment.setUser(user);
-        comment.setComment(parentComment);
-        postCommentRepository.save(comment);
-    }
 
-    @Override
-    public void deleteCommentComment(Long commentId) {
-        PostComment postComment = postCommentRepository.findById(commentId).orElseThrow(()-> new CommentException(ErrorStatus.COMMENT_NOT_FOUND));
-        postComment.deleteComment();
+        if (parentComment.getParent() != null) {
+            throw new CommentException(ErrorStatus.COMMENTCOMMENT_ALREADY_HAS);
+        }
+
+        PostComment comment = PostCommentConverter.toPostCommentComment(commentPostDto, user, parentComment);
+        postCommentRepository.save(comment);
     }
 }
