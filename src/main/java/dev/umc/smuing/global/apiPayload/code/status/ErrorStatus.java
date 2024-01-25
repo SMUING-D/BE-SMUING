@@ -22,7 +22,12 @@ public enum ErrorStatus implements BaseErrorCode {
     POST_NOT_FOUND(HttpStatus.NOT_FOUND, "POST_001", "존재 하지 않는 게시물 입니다."),
 
     // Comment 관련
-    COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "COMMENT_001", "존재 하지 않는 댓글 입니다.");
+    COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "COMMENT_001", "존재 하지 않는 댓글 입니다."),
+    COMMENT_ALREADY_DELETE(HttpStatus.BAD_REQUEST, "COMMENT_002", "이미 삭제된 댓글 입니다."),
+    COMMENTCOMMENT_ALREADY_HAS(HttpStatus.BAD_REQUEST, "COMMENT_003", "대댓글의 대댓글은 작성이 불가능 합니다."),
+
+    // CommentLike 관련
+    COMMENT_LIKE_EXIST(HttpStatus.BAD_REQUEST, "COMMENT_LIKE_001", "이미 해당하는 좋아요가 존재합니다.");
 
     private final HttpStatus httpStatus;
     private final String code;

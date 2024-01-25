@@ -61,4 +61,8 @@ public class PostComment extends BaseEntity {
     public void deleteComment() {
         this.content = null;
     }
+
+    public int getLike() {
+        return commentLikes.size();
+    }
 }

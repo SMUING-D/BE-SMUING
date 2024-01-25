@@ -1,5 +1,8 @@
 package dev.umc.smuing.postComment.service;
 
+import dev.umc.smuing.commentLike.CommentLike;
+import dev.umc.smuing.commentLike.converter.CommentLikeConverter;
+import dev.umc.smuing.commentLike.repository.CommentLikeRepository;
 import dev.umc.smuing.global.apiPayload.code.status.ErrorStatus;
 import dev.umc.smuing.global.apiPayload.exception.CommentException;
 import dev.umc.smuing.global.apiPayload.exception.PostException;
@@ -16,6 +19,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -24,20 +29,38 @@ public class PostCommentServiceImpl implements PostCommentService {
     private final PostCommentRepository postCommentRepository;
     private final UserRepository userRepository;
     private final PostRepository postRepository;
+    private final CommentLikeRepository commentLikeRepository;
 
     @Override
     public void postComment(PostCommentRequestDto.CommentPostDto commentPostDto, Long userId, Long postId) {
         User user = userRepository.findById(userId).orElseThrow(()-> new UserException(ErrorStatus.USER_NOT_FOUND));
         Post post = postRepository.findById(postId).orElseThrow(()-> new PostException(ErrorStatus.POST_NOT_FOUND));
-        PostComment postComment = PostCommentConverter.toPostComment(commentPostDto);
-        postComment.setUser(user);
-        postComment.setPost(post);
+        PostComment postComment = PostCommentConverter.toPostComment(commentPostDto, user, post);
         postCommentRepository.save(postComment);
     }
 
     @Override
     public void deleteComment(Long commentId) {
         PostComment postComment = postCommentRepository.findById(commentId).orElseThrow(()-> new CommentException(ErrorStatus.COMMENT_NOT_FOUND));
+
+        if (postComment.getContent() == null) {
+            throw new CommentException(ErrorStatus.COMMENT_ALREADY_DELETE);
+        }
+
         postComment.deleteComment();
+    }
+
+    @Override
+    public void likeComment(Long userId, Long commentId) {
+        User user = userRepository.findById(userId).orElseThrow(()-> new UserException(ErrorStatus.USER_NOT_FOUND));
+        PostComment postComment = postCommentRepository.findById(commentId).orElseThrow(()-> new CommentException(ErrorStatus.COMMENT_NOT_FOUND));
+
+        Optional<CommentLike> existsCommentLike = commentLikeRepository.findCommentLikeByUserAndPostComment(user, postComment);
+        if (existsCommentLike.isPresent()) {
+          throw new CommentException(ErrorStatus.COMMENT_LIKE_EXIST);
+        }
+
+        CommentLike commentLike = CommentLikeConverter.toCommentLike(user, postComment);
+        commentLikeRepository.save(commentLike);
     }
 }

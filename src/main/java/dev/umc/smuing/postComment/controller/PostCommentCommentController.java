@@ -9,20 +9,14 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/post/comments")
+@RequestMapping("/api/posts/comments")
 public class PostCommentCommentController {
 
     private final PostCommentCommentService postCommentCommentService;
 
-    @PostMapping("{userId}/{commentId}/comments")
+    @PostMapping("{userId}/{commentId}/comments") // userId는 나중에 토큰으로 교체
     public BaseResponse<?> postCommentComment(@RequestBody PostCommentRequestDto.CommentPostDto commentPostDto, @PathVariable Long userId, @PathVariable Long commentId) {
         postCommentCommentService.postCommentComment(commentPostDto, userId, commentId);
         return BaseResponse.onSuccess("대댓글 작성에 성공하였습니다.");
-    }
-
-    @DeleteMapping("/comments/{commentId}")
-    public BaseResponse<?> deleteComment(@PathVariable Long commentId) {
-        postCommentCommentService.deleteCommentComment(commentId);
-        return BaseResponse.onSuccess("대댓글 삭제에 성공하였습니다.");
     }
 }
