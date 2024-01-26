@@ -63,4 +63,15 @@ public class PostCommentServiceImpl implements PostCommentService {
         CommentLike commentLike = CommentLikeConverter.toCommentLike(user, postComment);
         commentLikeRepository.save(commentLike);
     }
+
+    @Override
+    public void updateComment(PostCommentRequestDto.CommentUpdateDto commentUpdateDto, Long commentId) {
+        PostComment postComment = postCommentRepository.findById(commentId).orElseThrow(()-> new CommentException(ErrorStatus.COMMENT_NOT_FOUND));
+
+        if (postComment.getContent() == null) {
+            throw new CommentException(ErrorStatus.COMMENT_ALREADY_DELETE);
+        }
+
+        postComment.updateComment(commentUpdateDto.getContent());
+    }
 }

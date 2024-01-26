@@ -8,4 +8,6 @@ public interface PostCommentService {
     void deleteComment(Long commentId);
 
     void likeComment(Long userId, Long commentId);
+
+    void updateComment(PostCommentRequestDto.CommentUpdateDto commentUpdateDto, Long commentId);
 }

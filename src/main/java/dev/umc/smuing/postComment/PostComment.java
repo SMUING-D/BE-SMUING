@@ -58,11 +58,17 @@ public class PostComment extends BaseEntity {
     public void setComment(PostComment postComment) {
         this.parent = postComment;
     }
+    
+    // 기능 메소드
     public void deleteComment() {
         this.content = null;
     }
 
     public int getLike() {
         return commentLikes.size();
+    }
+    
+    public void updateComment(String content) {
+        this.content = content;
     }
 }

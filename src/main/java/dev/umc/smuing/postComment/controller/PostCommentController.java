@@ -25,6 +25,12 @@ public class PostCommentController {
         return BaseResponse.onSuccess("댓글 삭제에 성공하였습니다.");
     }
 
+    @PatchMapping("/comments/{commentId}")
+    public BaseResponse<?> updateComment(@RequestBody PostCommentRequestDto.CommentUpdateDto commentUpdateDto, @PathVariable Long commentId) {
+        postCommentService.updateComment(commentUpdateDto, commentId);
+        return BaseResponse.onSuccess("댓글 수정에 성공하였습니다.");
+    }
+
     @PostMapping("/comments/{userId}/{commentId}/likes") // userId는 나중에 토큰으로 교체
     public BaseResponse<?> likeComment(@PathVariable Long userId, @PathVariable Long commentId) {
         postCommentService.likeComment(userId, commentId);
