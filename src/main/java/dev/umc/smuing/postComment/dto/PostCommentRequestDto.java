@@ -8,4 +8,9 @@ public class PostCommentRequestDto {
     public static class CommentPostDto {
         private String content;
     }
+
+    @Getter
+    public static class CommentUpdateDto {
+        private String content;
+    }
 }
