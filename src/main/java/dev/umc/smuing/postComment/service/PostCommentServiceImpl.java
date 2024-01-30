@@ -14,7 +14,7 @@ import dev.umc.smuing.postComment.converter.PostCommentConverter;
 import dev.umc.smuing.postComment.dto.PostCommentRequestDto;
 import dev.umc.smuing.postComment.repository.PostCommentRepository;
 import dev.umc.smuing.user.User;
-import dev.umc.smuing.user.UserRepository;
+import dev.umc.smuing.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
