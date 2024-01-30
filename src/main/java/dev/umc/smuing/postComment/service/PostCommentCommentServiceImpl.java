@@ -1,8 +1,5 @@
 package dev.umc.smuing.postComment.service;
 
-import dev.umc.smuing.commentLike.CommentLike;
-import dev.umc.smuing.commentLike.converter.CommentLikeConverter;
-import dev.umc.smuing.commentLike.repository.CommentLikeRepository;
 import dev.umc.smuing.global.apiPayload.code.status.ErrorStatus;
 import dev.umc.smuing.global.apiPayload.exception.CommentException;
 import dev.umc.smuing.global.apiPayload.exception.UserException;
@@ -11,7 +8,7 @@ import dev.umc.smuing.postComment.converter.PostCommentConverter;
 import dev.umc.smuing.postComment.dto.PostCommentRequestDto;
 import dev.umc.smuing.postComment.repository.PostCommentRepository;
 import dev.umc.smuing.user.User;
-import dev.umc.smuing.user.UserRepository;
+import dev.umc.smuing.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
