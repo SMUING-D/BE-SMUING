@@ -8,6 +8,7 @@ import dev.umc.smuing.postImage.PostImage;
 import dev.umc.smuing.postComment.PostComment;
 import dev.umc.smuing.global.Enum.PostType;
 import dev.umc.smuing.postLike.PostLike;
+import dev.umc.smuing.postReport.PostReport;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -64,5 +65,8 @@ public class Post extends BaseEntity {
 
     @OneToMany(mappedBy = "post")
     private List<UserPost> userPosts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "post")
+    private List<PostReport> postReports = new ArrayList<>();
 
 }

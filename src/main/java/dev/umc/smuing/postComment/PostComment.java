@@ -1,6 +1,7 @@
 package dev.umc.smuing.postComment;
 
 import dev.umc.smuing.commentLike.CommentLike;
+import dev.umc.smuing.commentReport.CommentReport;
 import dev.umc.smuing.global.BaseEntity;
 import dev.umc.smuing.post.Post;
 import dev.umc.smuing.postLike.PostLike;
@@ -47,6 +48,9 @@ public class PostComment extends BaseEntity {
 
     @OneToMany(mappedBy = "postComment")
     private List<CommentLike> commentLikes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "postComment")
+    private List<CommentReport> commentReports = new ArrayList<>();
 
     // 연관 관계 편의 메소드
     public void setUser (User user) {
