@@ -2,6 +2,7 @@ package dev.umc.smuing.postComment.controller;
 
 import dev.umc.smuing.global.apiPayload.BaseResponse;
 import dev.umc.smuing.postComment.dto.PostCommentRequestDto;
+import dev.umc.smuing.postComment.dto.PostCommentResponseDto;
 import dev.umc.smuing.postComment.service.PostCommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,12 @@ import org.springframework.web.bind.annotation.*;
 public class PostCommentController {
 
     private final PostCommentService postCommentService;
+
+    @GetMapping("/{postId}/comments")
+    public BaseResponse<?> getComments(@RequestParam(name = "cursor") Long cursor, @PathVariable Long postId) {
+        PostCommentResponseDto.CommentList commentList = postCommentService.getComments(cursor, postId);
+        return BaseResponse.onSuccess(commentList);
+    }
 
     @PostMapping("/{userId}/{postId}/comments") // userId는 나중에 토큰으로 교체
     public BaseResponse<?> postComment(@RequestBody PostCommentRequestDto.CommentPostDto commentPostDto, @PathVariable Long userId, @PathVariable Long postId) {
