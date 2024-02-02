@@ -15,4 +15,6 @@ public interface PostCommentService {
     void updateComment(PostCommentRequestDto.CommentUpdateDto commentUpdateDto, Long commentId);
 
     PostCommentResponseDto.CommentList getComments(Long cursor, Long postId, Long userId);
+
+    void reportComment(Long userId, Long commentId);
 }

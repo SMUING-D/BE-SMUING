@@ -27,7 +27,10 @@ public enum ErrorStatus implements BaseErrorCode {
     COMMENTCOMMENT_ALREADY_HAS(HttpStatus.BAD_REQUEST, "COMMENT_003", "대댓글의 대댓글은 작성이 불가능 합니다."),
 
     // CommentLike 관련
-    COMMENT_LIKE_EXIST(HttpStatus.BAD_REQUEST, "COMMENT_LIKE_001", "이미 해당하는 좋아요가 존재합니다.");
+    COMMENT_LIKE_EXIST(HttpStatus.BAD_REQUEST, "COMMENT_LIKE_001", "이미 해당하는 좋아요가 존재합니다."),
+
+    // CommentReport 관련
+    COMMENT_REPORT_EXIST(HttpStatus.BAD_REQUEST, "COMMENT_REPORT_001", "이미 해당하는 신고가 존재합니다.");
 
     private final HttpStatus httpStatus;
     private final String code;
