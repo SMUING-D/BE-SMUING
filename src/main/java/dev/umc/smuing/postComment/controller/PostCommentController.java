@@ -43,4 +43,10 @@ public class PostCommentController {
         postCommentService.likeComment(userId, commentId);
         return BaseResponse.onSuccess("댓글 좋아요에 성공하였습니다.");
     }
+
+    @PostMapping("/comments/{userId}/{commentId}/reports") // userId는 나중에 토큰으로 교체
+    public BaseResponse<?> reportComment(@PathVariable Long userId, @PathVariable Long commentId) {
+        postCommentService.reportComment(userId, commentId);
+        return BaseResponse.onSuccess("댓글 신고에 성공하였습니다.");
+    }
 }
