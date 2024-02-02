@@ -68,11 +68,34 @@ public class PostComment extends BaseEntity {
         this.content = null;
     }
 
-    public int getLike() {
+    public int getLikeSum() {
         return commentLikes.size();
+    }
+
+    public int getReportSum() {
+        return commentReports.size();
     }
     
     public void updateComment(String content) {
         this.content = content;
+    }
+
+    public boolean isMyLike(User user) {
+        for(CommentLike commentLike : this.commentLikes) {
+            if(commentLike.getUser().equals(user)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isMyReport(User user) {
+        for(CommentReport commentReport : this.commentReports) {
+            if(commentReport.getUser().equals(user)) {
+              return true;
+            }
+        }
+
+        return false;
     }
 }

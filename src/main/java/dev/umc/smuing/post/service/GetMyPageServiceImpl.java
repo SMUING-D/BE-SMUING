@@ -23,7 +23,7 @@ public class GetMyPageServiceImpl implements GetMyPageService {
     private final UserRepository userRepository;
     private final UserPostRepository userPostRepository;
     private final PostLikeRepository postLikeRepository;
-    private int pageSize = 20;
+    private static int pageSize = 20;
     @Override
     public PostResponseDto.PageListDto getMyPage(Long cursor, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(()-> new UserException(ErrorStatus.USER_NOT_FOUND));

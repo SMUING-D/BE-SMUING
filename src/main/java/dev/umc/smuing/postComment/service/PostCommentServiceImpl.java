@@ -12,10 +12,13 @@ import dev.umc.smuing.post.repository.PostRepository;
 import dev.umc.smuing.postComment.PostComment;
 import dev.umc.smuing.postComment.converter.PostCommentConverter;
 import dev.umc.smuing.postComment.dto.PostCommentRequestDto;
+import dev.umc.smuing.postComment.dto.PostCommentResponseDto;
 import dev.umc.smuing.postComment.repository.PostCommentRepository;
 import dev.umc.smuing.user.User;
 import dev.umc.smuing.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +33,7 @@ public class PostCommentServiceImpl implements PostCommentService {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
     private final CommentLikeRepository commentLikeRepository;
+    private static int cursorSize = 20;
 
     @Override
     public void postComment(PostCommentRequestDto.CommentPostDto commentPostDto, Long userId, Long postId) {
@@ -73,5 +77,14 @@ public class PostCommentServiceImpl implements PostCommentService {
         }
 
         postComment.updateComment(commentUpdateDto.getContent());
+    }
+
+    @Override
+    public PostCommentResponseDto.CommentList getComments(Long cursor, Long postId, Long userId) {
+        Post post = postRepository.findById(postId).orElseThrow(()-> new PostException(ErrorStatus.POST_NOT_FOUND));
+        Page<PostComment> postComments = postCommentRepository.findByIdGreaterThanAndPostAndParentIsNullOrderByIdAsc(cursor, post, PageRequest.of(0, cursorSize));
+        User user = userRepository.findById(userId).orElseThrow(()-> new UserException(ErrorStatus.USER_NOT_FOUND));
+        PostCommentResponseDto.CommentList commentList = PostCommentConverter.toCommentList(postComments, user);
+        return commentList;
     }
 }
