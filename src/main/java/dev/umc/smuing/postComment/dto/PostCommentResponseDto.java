@@ -17,6 +17,8 @@ public class PostCommentResponseDto {
     @AllArgsConstructor
     public static class CommentList {
         private List<CommentDto> commentList;
+        private Long nextCursor;
+        private Boolean isLast;
     }
 
 
@@ -34,7 +36,7 @@ public class PostCommentResponseDto {
         private LocalDateTime createAt;
         private LocalDateTime updateAt;
         private UserResponseDto.UserDto userDto;
-        private List<commentReplyDto> commentReplyList;
+        private List<CommentReplyDto> commentReplyList;
     }
 
 
@@ -42,11 +44,11 @@ public class PostCommentResponseDto {
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class commentReplyDto {
+    public static class CommentReplyDto {
         private Long id;
         private String content;
-        private Integer commentReplyLikeCount;
-        private Boolean isCommentReplyLike;
+        private Integer commentLikeCount;
+        private Boolean isCommentLike;
         private Boolean isReport;
         private Boolean isBan;
         private LocalDateTime createAt;
