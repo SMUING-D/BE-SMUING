@@ -1,12 +1,14 @@
 package dev.umc.smuing.user;
 
 import dev.umc.smuing.commentLike.CommentLike;
+import dev.umc.smuing.commentReport.CommentReport;
 import dev.umc.smuing.global.BaseEntity;
 import dev.umc.smuing.global.Enum.UndergraduateGraduate;
 import dev.umc.smuing.mapping.UserPost;
 import dev.umc.smuing.post.Post;
 import dev.umc.smuing.postComment.PostComment;
 import dev.umc.smuing.postLike.PostLike;
+import dev.umc.smuing.postReport.PostReport;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -64,6 +66,12 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "user")
     private List<CommentLike> commentLikes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<PostReport> postReports = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<CommentReport> commentReports = new ArrayList<>();
 
 
 }
