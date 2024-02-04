@@ -3,6 +3,9 @@ package dev.umc.smuing.postComment.service;
 import dev.umc.smuing.commentLike.CommentLike;
 import dev.umc.smuing.commentLike.converter.CommentLikeConverter;
 import dev.umc.smuing.commentLike.repository.CommentLikeRepository;
+import dev.umc.smuing.commentReport.CommentReport;
+import dev.umc.smuing.commentReport.converter.CommentReportConverter;
+import dev.umc.smuing.commentReport.repository.CommentReportRepository;
 import dev.umc.smuing.global.apiPayload.code.status.ErrorStatus;
 import dev.umc.smuing.global.apiPayload.exception.CommentException;
 import dev.umc.smuing.global.apiPayload.exception.PostException;
@@ -33,6 +36,7 @@ public class PostCommentServiceImpl implements PostCommentService {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
     private final CommentLikeRepository commentLikeRepository;
+    private final CommentReportRepository commentReportRepository;
     private static int cursorSize = 20;
 
     @Override
@@ -86,5 +90,19 @@ public class PostCommentServiceImpl implements PostCommentService {
         User user = userRepository.findById(userId).orElseThrow(()-> new UserException(ErrorStatus.USER_NOT_FOUND));
         PostCommentResponseDto.Comments comments = PostCommentConverter.toCommentList(postComments, user);
         return comments;
+    }
+
+    @Override
+    public void reportComment(Long userId, Long commentId) {
+        User user = userRepository.findById(userId).orElseThrow(()-> new UserException(ErrorStatus.USER_NOT_FOUND));
+        PostComment postComment = postCommentRepository.findById(commentId).orElseThrow(()-> new CommentException(ErrorStatus.COMMENT_NOT_FOUND));
+
+        Optional<CommentReport> existsCommentReport = commentReportRepository.findCommentReportByUserAndPostComment(user, postComment);
+        if (existsCommentReport.isPresent()) {
+            throw new CommentException(ErrorStatus.COMMENT_REPORT_EXIST);
+        }
+
+        CommentReport commentReport = CommentReportConverter.toCommentReport(user, postComment);
+        commentReportRepository.save(commentReport);
     }
 }

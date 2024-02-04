@@ -12,5 +12,7 @@ public interface PostCommentService {
 
     void updateComment(PostCommentRequestDto.CommentUpdateDto commentUpdateDto, Long commentId);
 
+    void reportComment(Long userId, Long commentId);
+
     PostCommentResponseDto.Comments getComments(Long cursor, Long postId, Long userId);
 }
