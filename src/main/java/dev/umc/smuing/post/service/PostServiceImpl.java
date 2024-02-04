@@ -8,6 +8,8 @@ import dev.umc.smuing.post.Post;
 import dev.umc.smuing.post.converter.PostConverter;
 import dev.umc.smuing.post.dto.*;
 import dev.umc.smuing.post.repository.PostRepository;
+import dev.umc.smuing.postComment.dto.PostCommentResponseDto;
+import dev.umc.smuing.postComment.service.PostCommentService;
 import dev.umc.smuing.postLike.repository.PostLikeRepository;
 import dev.umc.smuing.user.User;
 import dev.umc.smuing.user.repository.UserRepository;
@@ -29,7 +31,7 @@ public class PostServiceImpl implements PostService {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
     private final UserPostRepository userPostRepository;
-
+    private final PostCommentService postCommentService;
     private final PostLikeRepository postLikeRepository;
 
     @Override
@@ -87,14 +89,15 @@ public class PostServiceImpl implements PostService {
 
     private PostResponseDto.PostDetailDto createPostDetailDto(Post post) {
         PostResponseDto.PostDetailDto postDetailDto;
+        PostCommentResponseDto.Comments comments = postCommentService.getComments(0l, post.getId(), 1l);
 
         if (post.getPostType() == PostType.STUDY) {
             postDetailDto = PostResponseDto.PostDetailDto.builder()
-                    .study(createStudyDto(post))
+                    .study(createStudyDto(post, comments))
                     .build();
         } else if (post.getPostType() == PostType.JOB) {
             postDetailDto = PostResponseDto.PostDetailDto.builder()
-                    .job(createJobDto(post))
+                    .job(createJobDto(post, comments))
                     .build();
         } else {
             throw new RuntimeException("유효하지 않은 게시물 유형입니다.");
@@ -103,7 +106,7 @@ public class PostServiceImpl implements PostService {
         return postDetailDto;
     }
 
-    private PostTypeDto.StudyDto createStudyDto(Post post) {
+    private PostTypeDto.StudyDto createStudyDto(Post post, PostCommentResponseDto.Comments comments) {
         return PostTypeDto.StudyDto.builder()
                 .id(post.getId())
                 .title(post.getTitle())
@@ -118,12 +121,12 @@ public class PostServiceImpl implements PostService {
                 .college(post.getCollege())
                 .postLikeCount(5)
                 .userDto(toUserDto(findUserById(1L)))
-                .commentList(null) //임시
+                .comments(comments) //임시
                 .postImageList(null) //임시
                 .build();
     }
 
-    private PostTypeDto.JobDto createJobDto(Post post) {
+    private PostTypeDto.JobDto createJobDto(Post post, PostCommentResponseDto.Comments comments) {
         return PostTypeDto.JobDto.builder()
                 .id(post.getId())
                 .title(post.getTitle())
@@ -138,7 +141,7 @@ public class PostServiceImpl implements PostService {
                 .college(post.getCollege())
                 .postLikeCount(5)
                 .userDto(toUserDto(findUserById(1L)))
-                .commentList(null) //임시
+                .comments(comments) //임시
                 .postImageList(null) //임시
                 .build();
     }

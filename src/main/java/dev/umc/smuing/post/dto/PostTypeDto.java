@@ -1,16 +1,9 @@
 package dev.umc.smuing.post.dto;
 
 import dev.umc.smuing.global.Enum.CollegeType;
+import dev.umc.smuing.postComment.dto.PostCommentResponseDto;
 import dev.umc.smuing.postImage.PostImage;
 import dev.umc.smuing.user.dto.UserResponseDto;
-import lombok.Builder;
-import lombok.Getter;
-
-import javax.xml.stream.events.Comment;
-import java.time.LocalDateTime;
-import java.util.List;
-
-
 import lombok.Builder;
 import lombok.Getter;
 
@@ -36,7 +29,7 @@ public class PostTypeDto {
         private boolean isPostLike;
         private int postLikeCount;
         private UserResponseDto.UserDto userDto;
-        private List<Comment> commentList;
+        private PostCommentResponseDto.Comments comments;
         private List<PostImage> postImageList;
 
     }
@@ -57,7 +50,7 @@ public class PostTypeDto {
         private boolean isPostLike;
         private int postLikeCount;
         private UserResponseDto.UserDto userDto;
-        private List<Comment> commentList;
+        private PostCommentResponseDto.Comments comments;
         private List<PostImage> postImageList;
     }
 }

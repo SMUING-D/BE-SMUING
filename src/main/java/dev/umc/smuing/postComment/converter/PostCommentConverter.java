@@ -38,11 +38,17 @@ public class PostCommentConverter {
                 .build();
     }
 
-    public static PostCommentResponseDto.CommentList toCommentList(Page<PostComment> postComments, User user) {
-        List<PostCommentResponseDto.CommentDto> commentDtos  = postComments.stream().map((PostComment postComment) -> toCommentDto(postComment, user)).toList();
-        Long nextCursor = postComments.getContent().get(postComments.getContent().size() - 1).getId();
+    public static PostCommentResponseDto.Comments toCommentList(Page<PostComment> postComments, User user) {
+        List<PostCommentResponseDto.CommentDto> commentDtos = null;
+        Long nextCursor = null;
 
-        return PostCommentResponseDto.CommentList
+        if (!postComments.getContent().isEmpty()) {
+            commentDtos = postComments.stream().map((PostComment postComment) -> toCommentDto(postComment, user)).toList();
+            nextCursor = postComments.getContent().get(postComments.getContent().size() - 1).getId();
+        }
+
+
+        return PostCommentResponseDto.Comments
                 .builder()
                 .commentList(commentDtos)
                 .nextCursor(nextCursor)

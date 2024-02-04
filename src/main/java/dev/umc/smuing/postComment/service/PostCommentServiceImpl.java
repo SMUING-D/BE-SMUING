@@ -80,11 +80,11 @@ public class PostCommentServiceImpl implements PostCommentService {
     }
 
     @Override
-    public PostCommentResponseDto.CommentList getComments(Long cursor, Long postId, Long userId) {
+    public PostCommentResponseDto.Comments getComments(Long cursor, Long postId, Long userId) {
         Post post = postRepository.findById(postId).orElseThrow(()-> new PostException(ErrorStatus.POST_NOT_FOUND));
         Page<PostComment> postComments = postCommentRepository.findByIdGreaterThanAndPostAndParentIsNullOrderByIdAsc(cursor, post, PageRequest.of(0, cursorSize));
         User user = userRepository.findById(userId).orElseThrow(()-> new UserException(ErrorStatus.USER_NOT_FOUND));
-        PostCommentResponseDto.CommentList commentList = PostCommentConverter.toCommentList(postComments, user);
-        return commentList;
+        PostCommentResponseDto.Comments comments = PostCommentConverter.toCommentList(postComments, user);
+        return comments;
     }
 }

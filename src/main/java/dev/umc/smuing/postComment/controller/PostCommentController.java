@@ -16,8 +16,8 @@ public class PostCommentController {
 
     @GetMapping("/{userId}/{postId}/comments")
     public BaseResponse<?> getComments(@RequestParam(name = "cursor") Long cursor, @PathVariable Long postId, @PathVariable Long userId) {
-        PostCommentResponseDto.CommentList commentList = postCommentService.getComments(cursor, postId, userId);
-        return BaseResponse.onSuccess(commentList);
+        PostCommentResponseDto.Comments comments = postCommentService.getComments(cursor, postId, userId);
+        return BaseResponse.onSuccess(comments);
     }
 
     @PostMapping("/{userId}/{postId}/comments") // userId는 나중에 토큰으로 교체
