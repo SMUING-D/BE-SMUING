@@ -1,6 +1,5 @@
 package dev.umc.smuing.post;
 
-import dev.umc.smuing.commentLike.CommentLike;
 import dev.umc.smuing.global.BaseEntity;
 import dev.umc.smuing.global.Enum.CollegeType;
 import dev.umc.smuing.mapping.UserPost;
@@ -19,6 +18,7 @@ import java.util.List;
 @Entity
 @Builder
 @Getter
+@Setter
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "post")
@@ -32,15 +32,15 @@ public class Post extends BaseEntity {
 
     private String content;
 
-    @Column(name = "state_date")
+    @Column(name = "start_date")
     private LocalDateTime startDate;
 
     @Column(name = "member_count")
-    private LocalDateTime memberCount;
+    private String memberCount;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "post_type")
-    private PostType PostType;
+    private PostType postType;
 
     @Column(name = "due_date")
     private LocalDateTime dueDate;
@@ -48,6 +48,7 @@ public class Post extends BaseEntity {
 
     //5개 타입(Enum)
     @Column(name = "college")
+    @Enumerated(EnumType.STRING)
     private CollegeType college;
 
     @Column(name = "view_count")

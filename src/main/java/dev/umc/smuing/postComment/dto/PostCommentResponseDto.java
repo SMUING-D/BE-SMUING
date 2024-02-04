@@ -15,7 +15,7 @@ public class PostCommentResponseDto {
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class CommentList {
+    public static class Comments {
         private List<CommentDto> commentList;
         private Long nextCursor;
         private Boolean isLast;
