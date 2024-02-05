@@ -53,6 +53,7 @@ public class PostCommentConverter {
                 .commentList(commentDtos)
                 .nextCursor(nextCursor)
                 .isLast(postComments.isLast())
+                .remainComments(postComments.getTotalElements() - postComments.getContent().size())
                 .build();
     }
 
