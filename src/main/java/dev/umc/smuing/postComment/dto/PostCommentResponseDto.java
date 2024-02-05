@@ -19,6 +19,7 @@ public class PostCommentResponseDto {
         private List<CommentDto> commentList;
         private Long nextCursor;
         private Boolean isLast;
+        private Long remainComments;
     }
 
 
