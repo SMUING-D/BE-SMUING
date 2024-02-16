@@ -89,7 +89,7 @@ public class PostServiceImpl implements PostService {
 
     private PostResponseDto.PostDetailDto createPostDetailDto(Post post) {
         PostResponseDto.PostDetailDto postDetailDto;
-        PostCommentResponseDto.Comments comments = postCommentService.getComments(0l, post.getId(), 1l);
+        PostCommentResponseDto.Comments comments = postCommentService.getComments(0l, 10,post.getId(), 1l);
 
         if (post.getPostType() == PostType.STUDY) {
             postDetailDto = PostResponseDto.PostDetailDto.builder()

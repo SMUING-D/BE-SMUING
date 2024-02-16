@@ -37,7 +37,6 @@ public class PostCommentServiceImpl implements PostCommentService {
     private final PostRepository postRepository;
     private final CommentLikeRepository commentLikeRepository;
     private final CommentReportRepository commentReportRepository;
-    private static int cursorSize = 20;
 
     @Override
     public void postComment(PostCommentRequestDto.CommentPostDto commentPostDto, Long userId, Long postId) {
@@ -84,9 +83,9 @@ public class PostCommentServiceImpl implements PostCommentService {
     }
 
     @Override
-    public PostCommentResponseDto.Comments getComments(Long cursor, Long postId, Long userId) {
+    public PostCommentResponseDto.Comments getComments(Long cursor, Integer take, Long postId, Long userId) {
         Post post = postRepository.findById(postId).orElseThrow(()-> new PostException(ErrorStatus.POST_NOT_FOUND));
-        Page<PostComment> postComments = postCommentRepository.findByIdGreaterThanAndPostAndParentIsNullOrderByIdAsc(cursor, post, PageRequest.of(0, cursorSize));
+        Page<PostComment> postComments = postCommentRepository.findByIdGreaterThanAndPostAndParentIsNullOrderByIdAsc(cursor, post, PageRequest.of(0, take));
         User user = userRepository.findById(userId).orElseThrow(()-> new UserException(ErrorStatus.USER_NOT_FOUND));
         PostCommentResponseDto.Comments comments = PostCommentConverter.toCommentList(postComments, user);
         return comments;

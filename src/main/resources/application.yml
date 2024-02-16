@@ -5,7 +5,7 @@ spring:
   cloud:
     aws:
       s3:
-        bucket: umc-5th
+        bucket: smuing
       region:
         static: ap-northeast-2
       stack:

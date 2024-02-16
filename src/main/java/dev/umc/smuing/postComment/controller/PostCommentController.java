@@ -15,8 +15,8 @@ public class PostCommentController {
     private final PostCommentService postCommentService;
 
     @GetMapping("/{userId}/{postId}/comments")
-    public BaseResponse<?> getComments(@RequestParam(name = "cursor") Long cursor, @PathVariable Long postId, @PathVariable Long userId) {
-        PostCommentResponseDto.Comments comments = postCommentService.getComments(cursor, postId, userId);
+    public BaseResponse<?> getComments(@RequestParam(name = "cursor") Long cursor, @RequestParam(name = "take") Integer take, @PathVariable Long postId, @PathVariable Long userId) {
+        PostCommentResponseDto.Comments comments = postCommentService.getComments(cursor, take, postId, userId);
         return BaseResponse.onSuccess(comments);
     }
 
