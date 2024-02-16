@@ -23,20 +23,19 @@ public class GetMyPageServiceImpl implements GetMyPageService {
     private final UserRepository userRepository;
     private final UserPostRepository userPostRepository;
     private final PostLikeRepository postLikeRepository;
-    private static int pageSize = 20;
     @Override
-    public PostResponseDto.PageListDto getMyPage(Long cursor, Long userId) {
+    public PostResponseDto.PageListDto getMyPage(Long cursor, Integer take, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(()-> new UserException(ErrorStatus.USER_NOT_FOUND));
-        Page<UserPost> userPosts = userPostRepository.findByIdGreaterThanAndUserOrderByIdAsc(cursor, user, PageRequest.of(0, pageSize));
+        Page<UserPost> userPosts = userPostRepository.findByIdGreaterThanAndUserOrderByIdAsc(cursor, user, PageRequest.of(0, take));
 
         return PostConverter.toMyPageListDto(userPosts);
     }
 
     @Override
-    public PostResponseDto.PageListDto getLikePage(Long cursor, Long userId) {
+    public PostResponseDto.PageListDto getLikePage(Long cursor, Integer take, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(()-> new UserException(ErrorStatus.USER_NOT_FOUND));
 
-        Page<PostLike> postLikes = postLikeRepository.findByIdGreaterThanAndUserOrderByIdAsc(cursor, user, PageRequest.of(0, pageSize));
+        Page<PostLike> postLikes = postLikeRepository.findByIdGreaterThanAndUserOrderByIdAsc(cursor, user, PageRequest.of(0, take));
 
         return PostConverter.toLikePageListDto(postLikes);
     }

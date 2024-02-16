@@ -6,6 +6,8 @@ import dev.umc.smuing.post.dto.PopularPostDto;
 import dev.umc.smuing.post.dto.PostDto;
 import dev.umc.smuing.post.dto.PostRequestDto;
 import dev.umc.smuing.post.dto.PostResponseDto;
+import dev.umc.smuing.postComment.PostComment;
+import dev.umc.smuing.postComment.dto.PostCommentResponseDto;
 import dev.umc.smuing.postLike.PostLike;
 import dev.umc.smuing.user.User;
 import dev.umc.smuing.user.dto.UserResponseDto;
@@ -76,8 +78,14 @@ public class PostConverter {
     }
 
     public static PostResponseDto.PageListDto toMyPageListDto(Page<UserPost> userPosts) {
-        Long nextCursor = userPosts.getContent().get(userPosts.getContent().size() - 1).getId();
-        List<PostResponseDto.PageDto> pageDtos = userPosts.stream().map(PostConverter::toMyPageDto).toList();
+        List<PostResponseDto.PageDto> pageDtos = null;
+        Long nextCursor = null;
+
+        if (!userPosts.getContent().isEmpty()) {
+            pageDtos = userPosts.stream().map((UserPost userPost) -> toMyPageDto(userPost)).toList();
+            nextCursor = userPosts.getContent().get(userPosts.getContent().size() - 1).getId();
+        }
+
         return PostResponseDto.PageListDto.builder()
                                 .pageDtos(pageDtos)
                                 .isLast(userPosts.isLast())
@@ -95,8 +103,15 @@ public class PostConverter {
     }
 
     public static PostResponseDto.PageListDto toLikePageListDto(Page<PostLike> postLikes) {
-        Long nextCursor = postLikes.getContent().get(postLikes.getContent().size() - 1).getId();
-        List<PostResponseDto.PageDto> pageDtos = postLikes.stream().map(PostConverter::toLikePageDto).toList();
+        List<PostResponseDto.PageDto> pageDtos = null;
+        Long nextCursor = null;
+
+        if (!postLikes.getContent().isEmpty()) {
+            pageDtos = postLikes.stream().map((PostLike postLike) -> toLikePageDto(postLike)).toList();
+            nextCursor = postLikes.getContent().get(postLikes.getContent().size() - 1).getId();
+        }
+
+
         return PostResponseDto.PageListDto.builder()
                         .nextCursor(nextCursor)
                         .pageDtos(pageDtos)

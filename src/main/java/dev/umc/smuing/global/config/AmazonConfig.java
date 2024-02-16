@@ -18,13 +18,13 @@ public class AmazonConfig {
 
     private AWSCredentials awsCredentials;
 
-    @Value("${cloud.aws.credentials.accessKey}")
+    @Value("${spring.cloud.aws.credentials.accessKey}")
     private String accessKey;
 
-    @Value("${cloud.aws.credentials.secretKey}")
+    @Value("${spring.cloud.aws.credentials.secretKey}")
     private String secretKey;
 
-    @Value("${cloud.aws.region.static}")
+    @Value("${spring.cloud.aws.region.static}")
     private String region;
 
     @PostConstruct

@@ -16,14 +16,14 @@ public class GetMyPageController {
     private final GetMyPageService getMyPageService;
 
     @GetMapping("/{userId}/myPage")
-    public BaseResponse<?> getMyPage(@RequestParam(name = "cursor") Long cursor, @PathVariable Long userId) {
-        PostResponseDto.PageListDto pageDtoList = getMyPageService.getMyPage(cursor, userId);
+    public BaseResponse<?> getMyPage(@RequestParam(name = "cursor") Long cursor, @RequestParam(name = "take") Integer take, @PathVariable Long userId) {
+        PostResponseDto.PageListDto pageDtoList = getMyPageService.getMyPage(cursor, take, userId);
         return BaseResponse.onSuccess(pageDtoList);
     }
 
     @GetMapping("/{userId}/likes")
-    public BaseResponse<?> getLikePage(@RequestParam(name = "cursor") Long cursor, @PathVariable Long userId) {
-        PostResponseDto.PageListDto pageDtoList = getMyPageService.getLikePage(cursor, userId);
+    public BaseResponse<?> getLikePage(@RequestParam(name = "cursor") Long cursor, @RequestParam(name = "take") Integer take, @PathVariable Long userId) {
+        PostResponseDto.PageListDto pageDtoList = getMyPageService.getLikePage(cursor, take, userId);
         return BaseResponse.onSuccess(pageDtoList);
     }
 }

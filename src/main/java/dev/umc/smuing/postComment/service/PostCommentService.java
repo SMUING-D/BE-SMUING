@@ -14,5 +14,5 @@ public interface PostCommentService {
 
     void reportComment(Long userId, Long commentId);
 
-    PostCommentResponseDto.Comments getComments(Long cursor, Long postId, Long userId);
+    PostCommentResponseDto.Comments getComments(Long cursor, Integer take,Long postId, Long userId);
 }
