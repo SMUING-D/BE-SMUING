@@ -70,4 +70,8 @@ public class Post extends BaseEntity {
     @OneToMany(mappedBy = "post")
     private List<PostReport> postReports = new ArrayList<>();
 
+    // 비즈니스 로직
+    public Integer getLikeSum() {
+        return postLikes.size();
+    }
 }

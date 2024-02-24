@@ -74,6 +74,9 @@ public class PostConverter {
                 .postId(post.getId())
                 .title(post.getTitle())
                 .date(post.getCreatedAt())
+                .likes(post.getLikeSum())
+                .viewCount(post.getViewCount())
+                .postType(post.getPostType())
                 .build();
     }
 
@@ -99,6 +102,9 @@ public class PostConverter {
                 .postId(post.getId())
                 .title(post.getTitle())
                 .date(post.getCreatedAt())
+                .likes(post.getLikeSum())
+                .viewCount(post.getViewCount())
+                .postType(post.getPostType())
                 .build();
     }
 
