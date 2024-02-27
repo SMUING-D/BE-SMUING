@@ -1,7 +1,10 @@
 package dev.umc.smuing.post.service;
 
+import dev.umc.smuing.global.AmazonS3Manager;
 import dev.umc.smuing.global.Enum.CollegeType;
 import dev.umc.smuing.global.Enum.PostType;
+import dev.umc.smuing.global.Uuid;
+import dev.umc.smuing.global.UuidRepository;
 import dev.umc.smuing.mapping.UserPost;
 import dev.umc.smuing.mapping.repository.UserPostRepository;
 import dev.umc.smuing.post.Post;
@@ -10,12 +13,16 @@ import dev.umc.smuing.post.dto.*;
 import dev.umc.smuing.post.repository.PostRepository;
 import dev.umc.smuing.postComment.dto.PostCommentResponseDto;
 import dev.umc.smuing.postComment.service.PostCommentService;
+import dev.umc.smuing.postImage.PostImage;
+import dev.umc.smuing.postImage.converter.PostImageConverter;
+import dev.umc.smuing.postImage.repository.PostImageRepository;
 import dev.umc.smuing.postLike.repository.PostLikeRepository;
 import dev.umc.smuing.user.User;
 import dev.umc.smuing.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -33,17 +40,33 @@ public class PostServiceImpl implements PostService {
     private final UserPostRepository userPostRepository;
     private final PostCommentService postCommentService;
     private final PostLikeRepository postLikeRepository;
+    private final PostImageRepository postImageRepository;
+    private final UuidRepository uuidRepository;
+    private final AmazonS3Manager s3Manager;
 
     @Override
-    public void postSave(PostRequestDto.PostSaveDto postSaveDto) {
+    public void postSave(PostRequestDto.PostSaveDto postSaveDto, List<MultipartFile> multipartFileList) {
         User user = findUserById(1L);
         Post post = toPost(postSaveDto);
-        postRepository.save(post);
+        Post savedPost = postRepository.save(post);
+
+        for (MultipartFile file : multipartFileList) {
+            String uuid = UUID.randomUUID().toString();
+            Uuid savedUuid = uuidRepository.save(Uuid.builder()
+                    .uuid(uuid).build());
+
+            String pictureUrl = s3Manager.uploadFile(s3Manager.generatePostKeyName(savedUuid, file.getOriginalFilename()), file);
+
+            PostImage postImage = PostImageConverter.toPostImage(savedPost, file, pictureUrl);
+            postImageRepository.save(postImage);
+        }
+
         saveUserPost(user, post);
     }
 
     // Main페이지 불러오기
     @Override
+    @Transactional(readOnly = true)
     public PostResponseDto.getAllMainPost getAllMainPost() {
         PostResponseDto.getAllMainPost getAllMainPost = PostResponseDto.getAllMainPost.builder()
                 .popularPosts(getPopularPosts())
@@ -68,10 +91,12 @@ public class PostServiceImpl implements PostService {
     @Override
     public void postDelete(Long postId) {
         Post post = findPostById(postId);
+        post.getPostImages().forEach(s-> s3Manager.deleteFile(s.getPostImagePath()));
         postRepository.delete(post);
     }
 
     @Override //단과대 조회
+    @Transactional(readOnly = true)
     public PostResponseDto getAllPostListByCollege(CollegeType college) {
 
 
@@ -90,14 +115,15 @@ public class PostServiceImpl implements PostService {
     private PostResponseDto.PostDetailDto createPostDetailDto(Post post) {
         PostResponseDto.PostDetailDto postDetailDto;
         PostCommentResponseDto.Comments comments = postCommentService.getComments(0l, 10,post.getId(), 1l);
+        List<String> imageUrls = post.getPostImages().stream().map(PostImage::getPostImagePath).toList();
 
         if (post.getPostType() == PostType.STUDY) {
             postDetailDto = PostResponseDto.PostDetailDto.builder()
-                    .study(createStudyDto(post, comments))
+                    .study(createStudyDto(post, comments, imageUrls))
                     .build();
         } else if (post.getPostType() == PostType.JOB) {
             postDetailDto = PostResponseDto.PostDetailDto.builder()
-                    .job(createJobDto(post, comments))
+                    .job(createJobDto(post, comments, imageUrls))
                     .build();
         } else {
             throw new RuntimeException("유효하지 않은 게시물 유형입니다.");
@@ -106,7 +132,7 @@ public class PostServiceImpl implements PostService {
         return postDetailDto;
     }
 
-    private PostTypeDto.StudyDto createStudyDto(Post post, PostCommentResponseDto.Comments comments) {
+    private PostTypeDto.StudyDto createStudyDto(Post post, PostCommentResponseDto.Comments comments, List<String> images) {
         return PostTypeDto.StudyDto.builder()
                 .id(post.getId())
                 .title(post.getTitle())
@@ -122,11 +148,11 @@ public class PostServiceImpl implements PostService {
                 .postLikeCount(5)
                 .userDto(toUserDto(findUserById(1L)))
                 .comments(comments) //임시
-                .postImageList(null) //임시
+                .postImageList(images) //임시
                 .build();
     }
 
-    private PostTypeDto.JobDto createJobDto(Post post, PostCommentResponseDto.Comments comments) {
+    private PostTypeDto.JobDto createJobDto(Post post, PostCommentResponseDto.Comments comments, List<String> images) {
         return PostTypeDto.JobDto.builder()
                 .id(post.getId())
                 .title(post.getTitle())
@@ -141,8 +167,8 @@ public class PostServiceImpl implements PostService {
                 .college(post.getCollege())
                 .postLikeCount(5)
                 .userDto(toUserDto(findUserById(1L)))
-                .comments(comments) //임시
-                .postImageList(null) //임시
+                .comments(comments)
+                .postImageList(images)
                 .build();
     }
 

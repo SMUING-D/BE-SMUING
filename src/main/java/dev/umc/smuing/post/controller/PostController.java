@@ -8,8 +8,14 @@ import dev.umc.smuing.post.service.PostService;
 import dev.umc.smuing.postComment.dto.PostCommentRequestDto;
 import dev.umc.smuing.postComment.dto.PostCommentResponseDto;
 import dev.umc.smuing.postComment.service.PostCommentService;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,9 +24,12 @@ public class PostController {
 //    private final PostCommentService postCommentService;
     private final PostService postService;
 
-    @PostMapping("") // userId는 나중에 토큰으로 교체
-    public BaseResponse<?> savePost(@RequestBody PostRequestDto.PostSaveDto postSaveDto) {
-        postService.postSave(postSaveDto);
+    @PostMapping(value = "", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}) // userId는 나중에 토큰으로 교체
+    public BaseResponse<?> savePost(@Parameter(content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
+                                        @RequestPart(name = "postSaveDto")
+                                        PostRequestDto.PostSaveDto postSaveDto,
+                                    @RequestPart(name = "images", required = false) List<MultipartFile> images) {
+        postService.postSave(postSaveDto, images);
         return BaseResponse.onSuccess("게시물 작성에 성공하였습니다.");
     }
 
