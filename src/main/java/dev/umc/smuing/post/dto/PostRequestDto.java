@@ -4,6 +4,7 @@ import dev.umc.smuing.global.Enum.CollegeType;
 import dev.umc.smuing.global.Enum.PostType;
 import dev.umc.smuing.postImage.PostImage;
 import lombok.Getter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,12 +17,9 @@ public class PostRequestDto {
         private String content;
         private CollegeType college;
         private PostType type;
-        private List<PostImage> postImageList;
         private LocalDateTime dueDate;
         private String memberCount;
         private String startDate;
-
-
     }
 
 

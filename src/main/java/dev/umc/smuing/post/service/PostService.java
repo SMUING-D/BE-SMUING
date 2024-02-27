@@ -4,10 +4,13 @@ import dev.umc.smuing.global.Enum.CollegeType;
 import dev.umc.smuing.post.dto.PostRequestDto;
 import dev.umc.smuing.post.dto.PostResponseDto;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 public interface PostService {
 
-    void postSave(PostRequestDto.PostSaveDto postSaveDto);
+    void postSave(PostRequestDto.PostSaveDto postSaveDto, List<MultipartFile> multipartFileList);
     void postUpdate(PostRequestDto.PostUpdateDto postUpdateDto, Long id);
     void postDelete(Long postId);
 

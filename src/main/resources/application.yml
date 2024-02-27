@@ -6,6 +6,8 @@ spring:
     aws:
       s3:
         bucket: smuing
+        path:
+          post: post
       region:
         static: ap-northeast-2
       stack:

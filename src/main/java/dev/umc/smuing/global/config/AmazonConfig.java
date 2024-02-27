@@ -27,6 +27,12 @@ public class AmazonConfig {
     @Value("${spring.cloud.aws.region.static}")
     private String region;
 
+    @Value("${spring.cloud.aws.s3.bucket}")
+    private String bucket;
+
+    @Value("${spring.cloud.aws.s3.path.post}")
+    private String postPath;
+
     @PostConstruct
     public void init() {
         this.awsCredentials = new BasicAWSCredentials(accessKey, secretKey);

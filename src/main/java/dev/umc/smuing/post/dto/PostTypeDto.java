@@ -30,7 +30,7 @@ public class PostTypeDto {
         private int postLikeCount;
         private UserResponseDto.UserDto userDto;
         private PostCommentResponseDto.Comments comments;
-        private List<PostImage> postImageList;
+        private List<String> postImageList;
 
     }
 
@@ -51,6 +51,6 @@ public class PostTypeDto {
         private int postLikeCount;
         private UserResponseDto.UserDto userDto;
         private PostCommentResponseDto.Comments comments;
-        private List<PostImage> postImageList;
+        private List<String> postImageList;
     }
 }

@@ -31,7 +31,10 @@ public enum ErrorStatus implements BaseErrorCode {
     COMMENT_LIKE_NOT_FOUND(HttpStatus.BAD_REQUEST, "COMMENT_LIKE_002", "이미 해당하는 좋아요가 존재하지 않습니다."),
 
     // CommentReport 관련
-    COMMENT_REPORT_EXIST(HttpStatus.BAD_REQUEST, "COMMENT_REPORT_001", "이미 해당하는 신고가 존재합니다.");
+    COMMENT_REPORT_EXIST(HttpStatus.BAD_REQUEST, "COMMENT_REPORT_001", "이미 해당하는 신고가 존재합니다."),
+
+    //S3 관련
+    S3_OBJECT_NOT_FOUND(HttpStatus.NOT_FOUND, "S3_001", "이미지가 존재하지 않습니다.");
 
     private final HttpStatus httpStatus;
     private final String code;
