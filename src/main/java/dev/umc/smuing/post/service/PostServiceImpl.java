@@ -26,6 +26,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static dev.umc.smuing.post.converter.PostConverter.toPostImageDto;
 import static dev.umc.smuing.user.converter.UserConverter.toUserDto;
 import static dev.umc.smuing.post.converter.PostConverter.convertToPostDto;
 import static dev.umc.smuing.post.converter.PostConverter.toPost;
@@ -115,15 +117,14 @@ public class PostServiceImpl implements PostService {
     private PostResponseDto.PostDetailDto createPostDetailDto(Post post) {
         PostResponseDto.PostDetailDto postDetailDto;
         PostCommentResponseDto.Comments comments = postCommentService.getComments(0l, 10,post.getId(), 1l);
-        List<String> imageUrls = post.getPostImages().stream().map(PostImage::getPostImagePath).toList();
 
         if (post.getPostType() == PostType.STUDY) {
             postDetailDto = PostResponseDto.PostDetailDto.builder()
-                    .study(createStudyDto(post, comments, imageUrls))
+                    .study(createStudyDto(post, comments))
                     .build();
         } else if (post.getPostType() == PostType.JOB) {
             postDetailDto = PostResponseDto.PostDetailDto.builder()
-                    .job(createJobDto(post, comments, imageUrls))
+                    .job(createJobDto(post, comments))
                     .build();
         } else {
             throw new RuntimeException("유효하지 않은 게시물 유형입니다.");
@@ -132,13 +133,15 @@ public class PostServiceImpl implements PostService {
         return postDetailDto;
     }
 
-    private PostTypeDto.StudyDto createStudyDto(Post post, PostCommentResponseDto.Comments comments, List<String> images) {
+    private PostTypeDto.StudyDto createStudyDto(Post post, PostCommentResponseDto.Comments comments) {
+
+
         return PostTypeDto.StudyDto.builder()
                 .id(post.getId())
                 .title(post.getTitle())
                 .content(post.getContent())
                 .startDate(post.getStartDate().toString())
-                .memberCount(Integer.parseInt(post.getMemberCount()))
+                .memberCount(post.getMemberCount())
                 .dueDate(String.valueOf(post.getDueDate()))
                 .viewCount(post.getViewCount())
                 .createdAt(post.getCreatedAt())
@@ -148,17 +151,17 @@ public class PostServiceImpl implements PostService {
                 .postLikeCount(5)
                 .userDto(toUserDto(findUserById(1L)))
                 .comments(comments) //임시
-                .postImageList(images) //임시
+                .postImageList(toPostImageDto(post)) //임시
                 .build();
     }
 
-    private PostTypeDto.JobDto createJobDto(Post post, PostCommentResponseDto.Comments comments, List<String> images) {
+    private PostTypeDto.JobDto createJobDto(Post post, PostCommentResponseDto.Comments comments) {
         return PostTypeDto.JobDto.builder()
                 .id(post.getId())
                 .title(post.getTitle())
                 .content(post.getContent())
                 .startDate(post.getStartDate().toString())
-                .memberCount(Integer.parseInt(post.getMemberCount()))
+                .memberCount(post.getMemberCount())
                 .dueDate(String.valueOf(post.getDueDate()))
                 .viewCount(post.getViewCount())
                 .createdAt(post.getCreatedAt())
@@ -168,7 +171,7 @@ public class PostServiceImpl implements PostService {
                 .postLikeCount(5)
                 .userDto(toUserDto(findUserById(1L)))
                 .comments(comments)
-                .postImageList(images)
+                .postImageList(toPostImageDto(post))
                 .build();
     }
 

@@ -36,7 +36,7 @@ public class Post extends BaseEntity {
     private LocalDateTime startDate;
 
     @Column(name = "member_count")
-    private String memberCount;
+    private Integer memberCount;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "post_type")

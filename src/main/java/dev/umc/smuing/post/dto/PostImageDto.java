@@ -1,14 +1,15 @@
 package dev.umc.smuing.post.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 @Getter
+@Builder
 public class PostImageDto {
     @JsonProperty("id")
-    private int id;
+    private Long id;
 
     @JsonProperty("originName")
     private String originName;

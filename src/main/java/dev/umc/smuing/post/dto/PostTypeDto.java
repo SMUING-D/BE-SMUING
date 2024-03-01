@@ -30,8 +30,7 @@ public class PostTypeDto {
         private int postLikeCount;
         private UserResponseDto.UserDto userDto;
         private PostCommentResponseDto.Comments comments;
-        private List<String> postImageList;
-
+        private List<PostImageDto> postImageList;
     }
 
     @Getter
@@ -51,6 +50,6 @@ public class PostTypeDto {
         private int postLikeCount;
         private UserResponseDto.UserDto userDto;
         private PostCommentResponseDto.Comments comments;
-        private List<String> postImageList;
+        private List<PostImageDto> postImageList;
     }
 }

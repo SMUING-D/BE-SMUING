@@ -24,7 +24,7 @@ public class PostDto {
     private String college;
 
     @JsonProperty("memberCount")
-    private String memberCount;
+    private Integer memberCount;
 
     @JsonProperty("viewCount")
     private int viewCount;
