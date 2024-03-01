@@ -18,7 +18,7 @@ public class PostRequestDto {
         private CollegeType college;
         private PostType type;
         private LocalDateTime dueDate;
-        private String memberCount;
+        private Integer memberCount;
         private String startDate;
     }
 
@@ -31,7 +31,7 @@ public class PostRequestDto {
         private PostType type;
         private List<PostImage> postImageList;
         private String dueDate;
-        private String memberCount;
+        private Integer memberCount;
         private String startDate;
 
 

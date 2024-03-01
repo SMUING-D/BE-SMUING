@@ -4,6 +4,7 @@ import dev.umc.smuing.mapping.UserPost;
 import dev.umc.smuing.post.Post;
 import dev.umc.smuing.post.dto.PopularPostDto;
 import dev.umc.smuing.post.dto.PostDto;
+import dev.umc.smuing.post.dto.PostImageDto;
 import dev.umc.smuing.post.dto.PostRequestDto;
 import dev.umc.smuing.post.dto.PostResponseDto;
 import dev.umc.smuing.postComment.PostComment;
@@ -123,5 +124,14 @@ public class PostConverter {
                         .pageDtos(pageDtos)
                         .isLast(postLikes.isLast())
                         .build();
+    }
+
+    public static List<PostImageDto> toPostImageDto(Post post) {
+        return post.getPostImages().stream().map(p->PostImageDto.builder()
+                        .id(p.getId())
+                        .postImagePath(p.getPostImagePath())
+                        .originName(p.getOriginName())
+                        .build())
+                        .toList();
     }
 }

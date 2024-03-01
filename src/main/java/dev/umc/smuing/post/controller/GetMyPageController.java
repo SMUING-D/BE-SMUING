@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/posts")
+@RequestMapping("/api/v1/posts")
 public class GetMyPageController {
 
     private final GetMyPageService getMyPageService;
