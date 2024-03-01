@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/posts/comments")
+@RequestMapping("/api/v1/posts/comments")
 public class PostCommentCommentController {
 
     private final PostCommentCommentService postCommentCommentService;

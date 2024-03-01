@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/posts/comments")
+@RequestMapping("/api/v1/posts/comments")
 public class CommentLikeController {
 
     private final CommentLikeService commentLikeService;
