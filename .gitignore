@@ -37,3 +37,6 @@ out/
 .vscode/
 
 *.xml
+
+### application.yml ###
+**/resources/application.yml
