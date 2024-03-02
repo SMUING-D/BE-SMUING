@@ -13,7 +13,7 @@ public class UserConverter {
                 .builder()
                 .userId(user.getId())
                 .userName(user.getNickname())
-                .profile(user.getProfile())
+                .profile(user.getProfileImg())
                 .build();
     }
 }
