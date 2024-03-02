@@ -23,14 +23,16 @@ import java.util.List;
 public class User extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "user_id", updatable = false)
     private Long id;
 
     @Column(name = "student_id")
     private String studentId;
 
+    @Column(name = "password")
     private String password;
 
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
 
     private String major;
@@ -56,7 +58,7 @@ public class User extends BaseEntity {
     @Column(name = "undergraduate_graduate")
     private UndergraduateGraduate undergraduateGraduate;
 
-    private String profile;
+    private String profileImg;
 
     @OneToMany(mappedBy = "user")
     private List<UserPost> userPosts = new ArrayList<>();
