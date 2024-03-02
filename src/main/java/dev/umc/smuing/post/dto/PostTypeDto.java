@@ -2,7 +2,6 @@ package dev.umc.smuing.post.dto;
 
 import dev.umc.smuing.global.Enum.CollegeType;
 import dev.umc.smuing.postComment.dto.PostCommentResponseDto;
-import dev.umc.smuing.postImage.PostImage;
 import dev.umc.smuing.user.dto.UserResponseDto;
 import lombok.Builder;
 import lombok.Getter;

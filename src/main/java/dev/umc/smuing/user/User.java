@@ -3,9 +3,9 @@ package dev.umc.smuing.user;
 import dev.umc.smuing.commentLike.CommentLike;
 import dev.umc.smuing.commentReport.CommentReport;
 import dev.umc.smuing.global.BaseEntity;
+import dev.umc.smuing.global.Enum.Grade;
 import dev.umc.smuing.global.Enum.UndergraduateGraduate;
 import dev.umc.smuing.mapping.UserPost;
-import dev.umc.smuing.post.Post;
 import dev.umc.smuing.postComment.PostComment;
 import dev.umc.smuing.postLike.PostLike;
 import dev.umc.smuing.postReport.PostReport;
@@ -31,7 +31,7 @@ public class User extends BaseEntity {
 
     private String password;
 
-    private String name;
+    private String username;
 
     private String major;
 
@@ -42,10 +42,13 @@ public class User extends BaseEntity {
     @Column(name = "desired_employment")
     private String desiredEmployment;
 
+    private String role;
+
     @Column(name = "skill")
     private String skill;
 
-    private Integer grade;
+    @Enumerated(EnumType.STRING)
+    private Grade grade;
 
     private String college;
 

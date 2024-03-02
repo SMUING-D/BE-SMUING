@@ -2,17 +2,12 @@ package dev.umc.smuing.post.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import dev.umc.smuing.global.Enum.CollegeType;
 import dev.umc.smuing.global.Enum.PostType;
-import dev.umc.smuing.postImage.PostImage;
 import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
-import dev.umc.smuing.user.dto.UserResponseDto.UserDto;
-
-import javax.xml.stream.events.Comment;
 
 public class PostResponseDto {
 
