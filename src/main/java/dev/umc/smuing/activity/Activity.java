@@ -1,4 +1,4 @@
-package dev.umc.smuing.career;
+package dev.umc.smuing.activity;
 
 import dev.umc.smuing.global.BaseEntity;
 import dev.umc.smuing.user.User;
@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,16 +24,12 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Career extends BaseEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "career_id")
+public class Activity extends BaseEntity {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "activity_id")
     private Long id;
 
     private String name;
-
-    private String job;
 
     @Column(name = "start_date")
     private LocalDateTime startDate;

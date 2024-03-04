@@ -1,9 +1,12 @@
-package dev.umc.smuing.career;
+package dev.umc.smuing.skill;
 
 import dev.umc.smuing.global.BaseEntity;
+import dev.umc.smuing.global.Enum.SkillLevel;
 import dev.umc.smuing.user.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,16 +26,18 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Career extends BaseEntity {
+public class Skill extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "career_id")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "skill_id")
     private Long id;
 
-    private String name;
+    @Column(name = "skill_name")
+    private String skillName;
 
-    private String job;
+    @Column(name = "skill_level")
+    @Enumerated(EnumType.STRING)
+    private SkillLevel skillLevel;
 
     @Column(name = "start_date")
     private LocalDateTime startDate;

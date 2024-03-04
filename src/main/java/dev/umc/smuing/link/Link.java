@@ -1,4 +1,4 @@
-package dev.umc.smuing.career;
+package dev.umc.smuing.link;
 
 import dev.umc.smuing.global.BaseEntity;
 import dev.umc.smuing.user.User;
@@ -23,24 +23,15 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Career extends BaseEntity {
-
+public class Link extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "career_id")
+    @Column(name = "link_id")
     private Long id;
 
     private String name;
 
-    private String job;
-
-    @Column(name = "start_date")
-    private LocalDateTime startDate;
-
-    @Column(name = "end_date")
-    private LocalDateTime endDate;
-
-    private String description;
+    private String address;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

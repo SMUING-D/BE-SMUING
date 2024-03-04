@@ -1,4 +1,4 @@
-package dev.umc.smuing.career;
+package dev.umc.smuing.school;
 
 import dev.umc.smuing.global.BaseEntity;
 import dev.umc.smuing.user.User;
@@ -23,16 +23,15 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Career extends BaseEntity {
-
+public class School extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "career_id")
+    @Column(name = "school_id")
     private Long id;
 
     private String name;
 
-    private String job;
+    private String major;
 
     @Column(name = "start_date")
     private LocalDateTime startDate;
