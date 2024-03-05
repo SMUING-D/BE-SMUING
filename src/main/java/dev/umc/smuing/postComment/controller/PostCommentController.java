@@ -1,6 +1,7 @@
 package dev.umc.smuing.postComment.controller;
 
 import dev.umc.smuing.global.apiPayload.BaseResponse;
+import dev.umc.smuing.global.token.ExtractUserId;
 import dev.umc.smuing.postComment.dto.PostCommentRequestDto;
 import dev.umc.smuing.postComment.dto.PostCommentResponseDto;
 import dev.umc.smuing.postComment.service.PostCommentService;
@@ -14,14 +15,14 @@ public class PostCommentController {
 
     private final PostCommentService postCommentService;
 
-    @GetMapping("/{userId}/{postId}/comments")
-    public BaseResponse<?> getComments(@RequestParam(name = "cursor") Long cursor, @RequestParam(name = "take") Integer take, @PathVariable Long postId, @PathVariable Long userId) {
+    @GetMapping("/{postId}/comments")
+    public BaseResponse<?> getComments(@RequestParam(name = "cursor") Long cursor, @RequestParam(name = "take") Integer take, @PathVariable Long postId, @ExtractUserId Long userId) {
         PostCommentResponseDto.Comments comments = postCommentService.getComments(cursor, take, postId, userId);
         return BaseResponse.onSuccess(comments);
     }
 
-    @PostMapping("/{userId}/{postId}/comments") // userId는 나중에 토큰으로 교체
-    public BaseResponse<?> postComment(@RequestBody PostCommentRequestDto.CommentPostDto commentPostDto, @PathVariable Long userId, @PathVariable Long postId) {
+    @PostMapping("/{postId}/comments") // userId는 나중에 토큰으로 교체
+    public BaseResponse<?> postComment(@RequestBody PostCommentRequestDto.CommentPostDto commentPostDto, @ExtractUserId Long userId, @PathVariable Long postId) {
         postCommentService.postComment(commentPostDto, userId, postId);
         return BaseResponse.onSuccess("댓글 작성에 성공하였습니다.");
     }
@@ -38,14 +39,14 @@ public class PostCommentController {
         return BaseResponse.onSuccess("댓글 수정에 성공하였습니다.");
     }
 
-    @PostMapping("/comments/{userId}/{commentId}/likes") // userId는 나중에 토큰으로 교체
-    public BaseResponse<?> likeComment(@PathVariable Long userId, @PathVariable Long commentId) {
+    @PostMapping("/comments/{commentId}/likes") // userId는 나중에 토큰으로 교체
+    public BaseResponse<?> likeComment(@ExtractUserId Long userId, @PathVariable Long commentId) {
         postCommentService.likeComment(userId, commentId);
         return BaseResponse.onSuccess("댓글 좋아요에 성공하였습니다.");
     }
 
-    @PostMapping("/comments/{userId}/{commentId}/reports") // userId는 나중에 토큰으로 교체
-    public BaseResponse<?> reportComment(@PathVariable Long userId, @PathVariable Long commentId) {
+    @PostMapping("/comments/{commentId}/reports") // userId는 나중에 토큰으로 교체
+    public BaseResponse<?> reportComment(@ExtractUserId Long userId, @PathVariable Long commentId) {
         postCommentService.reportComment(userId, commentId);
         return BaseResponse.onSuccess("댓글 신고에 성공하였습니다.");
     }
