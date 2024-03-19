@@ -1,4 +1,5 @@
 # BE-SMUING
+SMUING 서비스 서버입니다
 
 ### 📋 Commit Message Convention
 | Tag | Description |
